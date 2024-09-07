@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Swimming Set Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://wallpaperaccess.com/full/2151201.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(0, 20, 40, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4dc0ff;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4dc0ff;
+            color: #001428;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #66ccff;
+            transform: translateY(-2px);
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #text {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        #drills {
+            display: none;
+            margin-top: 20px;
+        }
+        .drill-category {
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .drill-category h3 {
+            margin-bottom: 15px;
+            color: #4dc0ff;
+        }
+        .drill {
+            display: inline-block;
+            background-color: #4dc0ff;
+            color: #001428;
+            padding: 8px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .drill:hover {
+            background-color: #66ccff;
+            transform: translateY(-2px);
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .displaying {
+            font-size: 24px;
+            text-align: center;
+            margin: 15px 0;
+            color: #4dc0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Swimming Set Generator</h1>
+        
+        <h2>Set Configuration</h2>
+        <input type="range" id="length" min="400" max="10000" step="50" oninput="display(this)">
+        <p id="the_text" class="displaying">5200 yards</p>
+        
+        <div class="button-group">
+            <button onclick="adjustLength(-50)">Decrease</button>
+            <button onclick="adjustLength(50)">Increase</button>
+        </div>
+        
+        <h2>Stroke</h2>
+        <div class="button-group">
+            <button onclick="setStroke(0)">All</button>
+            <button onclick="setStroke(1)">Freestyle</button>
+            <button onclick="setStroke(2)">Backstroke</button>
+            <button onclick="setStroke(3)">Breaststroke</button>
+            <button onclick="setStroke(4)">Butterfly</button>
+            <button onclick="setStroke(5)">IM</button>
+        </div>
+        <p id="stroke_displayer" class="displaying">All</p>
+        
+        <h2 id="show_max_drills">Yards Of Drills (no more than 1900)</h2>
+        <input type="number" id="drills_using" value="200" min="0" max="1900" step="50">
+        
+        <div class="button-group">
+            <button onclick="start()">Generate Set</button>
+        </div>
+        
+        <h2>Your Swimming Set</h2>
+        <div id="text"></div>
+        
+        <div class="button-group">
+            <button onclick="show_drills()">Toggle Drills</button>
+        </div>
+        <div id="drills"></div>
+    </div>
+
+    <footer>
+        Credits: Myswimpro, Fares Ksebati, SwimLifeGuru, Jarasport, Skills nt shorts, and ProSwimmer
+    </footer>
+
+    <script>
+        let fast_swims = [["100 free","25x4 fly","100 breast","100 back","100 IM","100 Frim","4x25 free sprint","100 pull","50x2 fly"],['100 free','4x25 free sprint','100 pull','100 Frim'],['100 back','100 IM','100 Frim'],['100 breast','100 Frim','100 IM'],['50x2 fly','25x4 fly','100 IM','100 free(relax)','100 fly','100 IM'],['100 IM','100 Frim','50x2 IM']];
+        let drills = [["Fist drill","Zipper drill","Head up drill","Drag finger tips drill","With fins drill","1 hand butterfly drill","2-2-2 drill","Freestyle kick and butterfly hand drill","With buoy drill","Butterfly fist drill","Cobra strike drill","3 kick breast drill","Heal tag drill","Butterfly kick breast arms","Under water dolphin kick","Backstroke pull","Butterfly kick on back","Breaststroke kick on back","Backstroke windmill drill"],["Fist drill","Zipper drill","Head up drill","Drag finger tips drill","With fins drill"],["Backstroke pull","Butterfly kick on back","Breaststroke kick on back","Backstroke windmill drill"],["Cobra strike drill","3 kick breast drill","Butterfly kick breast arms","Heal tag drill","Breaststroke kick on back"],["1 hand butterfly drill","2-2-2 drill","Freestyle kick and butterfly hand drill","With buoy drill","Butterfly fist drill"],["Fist drill","Zipper drill","Head up drill","Drag finger tips drill","With fins drill","1 hand butterfly drill","2-2-2 drill","Freestyle kick and butterfly hand drill","With buoy drill","Butterfly fist drill","Cobra strike drill","3 kick breast drill","Heal tag drill","Butterfly kick breast arms","Under water dolphin kick","Backstroke pull","Butterfly kick on back","Breaststroke kick on back","Backstroke windmill drill"]];
+        let stroke = 0;
+        let strokes = ['All','Freestyle','Backstroke','Breaststroke','Butterfly','IM'];
+
+        function show_drills() {
+            let drillsDiv = document.getElementById("drills");
+            if (drillsDiv.style.display === "none" || drillsDiv.style.display === "") {
+                drillsDiv.style.display = "block";
+                populateDrills();
+            } else {
+                drillsDiv.style.display = "none";
+            }
+        }
+
+        function populateDrills() {
+            let drillsDiv = document.getElementById("drills");
+            drillsDiv.innerHTML = '';
+            for (let i = 0; i < drills.length; i++) {
+                let category = document.createElement('div');
+                category.className = 'drill-category';
+                category.innerHTML = `<h3>${strokes[i]} Drills</h3>`;
+                for (let drill of drills[i]) {
+                    let drillElem = document.createElement('span');
+                    drillElem.className = 'drill';
+                    drillElem.textContent = drill;
+                    drillElem.onclick = function() { alert(`Drill: ${drill}\nDescription: [Insert description here]`); };
+                    category.appendChild(drillElem);
+                }
+                drillsDiv.appendChild(category);
+            }
+        }
+
+        function start() {
+            let set_length = Math.round(Number(document.getElementById('length').value)/50)*50;
+            let drill_length = Number(document.getElementById('drills_using').value);
+            let test_length = set_length;
+            let output = '';
+
+            output += '🏊‍♂️ Warm-up 🏊‍♂️\n';
+            let warm_up = (3+Math.round(Math.random()))*50;
+            output += `${warm_up} yards Warm Up\n`;
+            output += '200 yards Kick\n';
+            test_length = test_length - warm_up - 200;
+
+            if (drill_length > drills[stroke].length*100) {
+                alert('Too many drills selected for this stroke');
+            } else {
+                if (test_length > 0) {
+                    if (test_length > 300 && stroke === 5 && drill_length < 300)  {
+                        output += '6x50 IM order (butterfly to back, back to breast, and then breast to free and repeat)\n';
+                        test_length = test_length - 300;
+                    }
+                    if (test_length > 0) {
+                        output += '\n🔧 Drill Set 🔧\n';
+                        let drillsToUse = [...drills[stroke]];
+                        for (let i = 0; i < Math.min(drill_length, test_length) / 100; i++) {
+                            let rand = Math.floor(drillsToUse.length * Math.random());
+                            output += `100 yards ${drillsToUse[rand]}\n`;
+                            test_length -= 100;
+                            drillsToUse.splice(rand, 1);
+                        }
+                    }
+                }
+                if (test_length > 200){
+                    output += '\n🏅 Main Set 🏅\n';
+                    let total_of = new Array(9).fill(0);
+                    for (let i = 0; i < test_length - 200; i += 100) {
+                        let rand = Math.floor(fast_swims[stroke].length * Math.random());
+                        total_of[rand] += 1;
+                        test_length -= 100;
+                    }
+                    for (let i = 0; i < 9; i++){
+                        if (total_of[i] > 0){
+                            output += `${total_of[i]}x${fast_swims[stroke][i]}\n`;
+                        }
+                    }
+                }
+                if (test_length > 0) {
+                    output += '\n🧘 Cool Down 🧘\n';
+                    output += `${test_length} yards Cool Down\n`;
+                }
+            }
+            document.getElementById("text").innerText = output;
+        }
+
+        function display(obj) {
+            document.getElementById("the_text").innerText = Math.round(obj.value/50)*50 + " yards";
+        }
+
+        function setStroke(newStroke) {
+            stroke = newStroke;
+            document.getElementById('stroke_displayer').innerText = strokes[stroke];
+            document.getElementById('show_max_drills').innerText = 'Yards of Drills ' + '(no more than ' + drills[stroke].length*100 + ')';
+        }
+
+        function adjustLength(change) {
+            let lengthInput = document.getElementById('length');
+            lengthInput.value = Math.max(400, Math.min(10000, parseInt(lengthInput.value) + change));
+            display(lengthInput);
+        }
+
+        // Initialize displays
+        display(document.getElementById('length'));
+        setStroke(0);
+    </script>
+</body>
+</html>
