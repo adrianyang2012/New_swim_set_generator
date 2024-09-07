@@ -173,8 +173,77 @@
 
     <script>
         let fast_swims = [["100 free","25x4 fly","100 breast","100 back","100 IM","100 Frim","4x25 free sprint","100 pull","50x2 fly"],['100 free','4x25 free sprint','100 pull','100 Frim'],['100 back','100 IM','100 Frim'],['100 breast','100 Frim','100 IM'],['50x2 fly','25x4 fly','100 IM','100 free(relax)','100 fly','100 IM'],['100 IM','100 Frim','50x2 IM']];
-        let drills = [["Fist drill","Zipper drill","Head up drill","Drag finger tips drill","With fins drill","1 hand butterfly drill","2-2-2 drill","Freestyle kick and butterfly hand drill","With buoy drill","Butterfly fist drill","Cobra strike drill","3 kick breast drill","Heal tag drill","Butterfly kick breast arms","Under water dolphin kick","Backstroke pull","Butterfly kick on back","Breaststroke kick on back","Backstroke windmill drill"],["Fist drill","Zipper drill","Head up drill","Drag finger tips drill","With fins drill"],["Backstroke pull","Butterfly kick on back","Breaststroke kick on back","Backstroke windmill drill"],["Cobra strike drill","3 kick breast drill","Butterfly kick breast arms","Heal tag drill","Breaststroke kick on back"],["1 hand butterfly drill","2-2-2 drill","Freestyle kick and butterfly hand drill","With buoy drill","Butterfly fist drill"],["Fist drill","Zipper drill","Head up drill","Drag finger tips drill","With fins drill","1 hand butterfly drill","2-2-2 drill","Freestyle kick and butterfly hand drill","With buoy drill","Butterfly fist drill","Cobra strike drill","3 kick breast drill","Heal tag drill","Butterfly kick breast arms","Under water dolphin kick","Backstroke pull","Butterfly kick on back","Breaststroke kick on back","Backstroke windmill drill"]];
-        let stroke = 0;
+        let drills = 
+                  [
+                    "Fist Drill",
+                    "Zipper Drill",
+                    "Head Up Drill",
+                    "Drag Finger Tips Drill",
+                    "with Fins Drill",
+                    "1 Hand Butterfly Drill",
+                    "2-2-2 Drill",
+                    "Freestyle Kick and Butterfly Hand Drill",
+                    "with Buoy Drill",
+                    "Butterfly Fist Drill",
+                    "Cobra Strike Drill",
+                    "3 Kick Breast Drill",
+                    "Heal Tag Drill",
+                    "Butterfly Kick Breast Arms",
+                    "Under Water Dolphin Kick",
+                    "Backstroke Pull",
+                    "Butterfly Kick on Back",
+                    "Breaststroke Kick on Back",
+                    "Backstroke Windmill Drill"
+                  ],
+                  [
+                    "Fist Drill",
+                    "Zipper Drill",
+                    "Head Up Drill",
+                    "Drag Finger Tips Drill",
+                    "with Fins Drill"
+                  ],
+                  [
+                    "Backstroke Pull",
+                    "Butterfly Kick on Back",
+                    "Breaststroke Kick on Back",
+                    "Backstroke Windmill Drill"
+                  ],
+                  [
+                    "Cobra Strike Drill",
+                    "3 Kick Breast Drill",
+                    "Butterfly Kick Breast Arms",
+                    "Heal Tag Drill",
+                    "Breaststroke Kick on Back"
+                  ],
+                  [
+                    "1 Hand Butterfly Drill",
+                    "2-2-2 Drill",
+                    "Freestyle Kick and Butterfly Hand Drill",
+                    "with Buoy Drill",
+                    "Butterfly Fist Drill"
+                  ],
+                  [
+                    "Fist Drill",
+                    "Zipper Drill",
+                    "Head Up Drill",
+                    "Drag Finger Tips Drill",
+                    "with Fins Drill",
+                    "1 Hand Butterfly Drill",
+                    "2-2-2 Drill",
+                    "Freestyle Kick and Butterfly Hand Drill",
+                    "with Buoy Drill",
+                    "Butterfly Fist Drill",
+                    "Cobra Strike Drill",
+                    "3 Kick Breast Drill",
+                    "Heal Tag Drill",
+                    "Butterfly Kick Breast Arms",
+                    "Under Water Dolphin Kick",
+                    "Backstroke Pull",
+                    "Butterfly Kick on Back",
+                    "Breaststroke Kick on Back",
+                    "Backstroke Windmill Drill"
+                  ]
+                ];
         let strokes = ['All','Freestyle','Backstroke','Breaststroke','Butterfly','IM'];
 
         function show_drills() {
